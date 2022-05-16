@@ -1,21 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { useState, useEffect} from 'react'
 function App() {
+
+  const [msg, setMsg] = useState('서버 연결 중')
+
+  useEffect(() => {
+    fetch(process.env.REACT_APP_API_SERVER_ENDPOINT)
+    .then(resp => resp.json())
+    .then(json => setMsg(json))
+    .catch(() => setMsg('연결 안됨'))
+  }, [])
+
+  console.log(process.env.REACT_APP_API_SERVER_ENDPOINT)
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div>{JSON.stringify(msg)}</div>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://codestates.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Hello Codestates
         </a>
       </header>
     </div>
